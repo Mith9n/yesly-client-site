@@ -3,7 +3,13 @@ import "./globals.css";
 import { AppProviders } from "@/components/providers/app-providers";
 
 export const metadata: Metadata = {
-  title: "Yesly — Wedding Planning Platform",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ),
+  title: {
+    default: "Yesly — Wedding Planning Platform",
+    template: "%s | Yesly",
+  },
   description:
     "Discover and book the world's finest wedding ateliers, venues, florists and artisans with Yesly.",
 };
