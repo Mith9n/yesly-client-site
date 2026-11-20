@@ -112,7 +112,7 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 gap-y-10 py-12 text-center sm:grid-cols-2 sm:gap-x-8 sm:text-left md:grid-cols-4 md:gap-x-14 md:py-16">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-10 py-12 text-left sm:gap-x-8 md:grid-cols-4 md:gap-x-14 md:py-16">
           {columns.map((column) => (
             <div key={column.title}>
               <ColumnHeading>{column.title}</ColumnHeading>
@@ -131,7 +131,7 @@ export function Footer() {
             </div>
           ))}
 
-          <div className="sm:col-span-2 md:col-span-1">
+          <div>
             <ColumnHeading>Atelier</ColumnHeading>
             <ul className="mt-5 space-y-3.5 text-[13px] leading-snug text-on-surface-variant">
               <li>
@@ -160,7 +160,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label={social.label}
                 title={social.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/45 text-on-surface-variant shadow-[0_8px_24px_-14px_rgba(27,28,26,0.55)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-white/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant/50 bg-surface-container-high/35 text-on-surface-variant shadow-[0_6px_18px_-12px_rgba(27,28,26,0.4)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-surface-container-high/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
               >
                 <span className="h-[18px] w-[18px]">
                   <SocialIcon label={social.label} />
