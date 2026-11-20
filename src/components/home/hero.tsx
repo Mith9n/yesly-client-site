@@ -41,9 +41,9 @@ export function Hero() {
           </p>
 
           <h1 className="mt-6 max-w-[860px] font-display text-[clamp(2.25rem,5.9vw,4.35rem)] font-medium leading-[1.05] tracking-[-0.02em] text-surface">
-            <span className="block">Plan Your Dream Wedding,</span>
+            <span className="block">Plan Your Dream Wedding</span>
             <span className="block">Effortlessly</span>
-          </h1>
+          </h1> 
 
           <div className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
             <Link

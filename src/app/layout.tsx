@@ -3,36 +3,9 @@ import "./globals.css";
 import { AppProviders } from "@/components/providers/app-providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  ),
-  title: {
-    default: "Yesly — Wedding Planning Platform",
-    template: "%s | Yesly",
-  },
+  title: "Yesly — Wedding Planning Platform",
   description:
     "Discover and book the world's finest wedding ateliers, venues, florists and artisans with Yesly.",
-  applicationName: "Yesly",
-  keywords: [
-    "wedding marketplace",
-    "wedding vendors",
-    "wedding planning",
-    "bridal services",
-  ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    siteName: "Yesly",
-    title: "Yesly — Wedding Planning Platform",
-    description:
-      "Discover and book trusted wedding ateliers, venues, florists and artisans.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Yesly — Wedding Planning Platform",
-    description:
-      "Discover and book trusted wedding ateliers, venues, florists and artisans.",
-  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
