@@ -34,6 +34,44 @@ const socials = [
   { label: "Facebook", href: BRAND.social.facebook },
 ];
 
+function SocialIcon({ label }: { label: string }) {
+  if (label === "Instagram") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  if (label === "Pinterest") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M9.7 20.2c.7-1.8 1.1-3.1 1.4-4.8.8.8 2.1 1.4 3.4 1.4 4.1 0 7.1-3.7 7.1-8.1C21.6 4.7 17.9 2 13.1 2 7.2 2 3.8 5.8 3.8 10.1c0 2.8 1.1 5.3 3.4 6.2.2.1.5 0 .6-.3l.5-1.8c.1-.4 0-.5-.3-.9-.5-.6-.9-1.5-.9-2.8 0-3.4 2.6-6.5 6.8-6.5 3.7 0 5.7 2.3 5.7 5.3 0 4-1.8 7.3-4.4 7.3-1.4 0-2.5-1.2-2.1-2.6.4-1.7 1.2-3.5 1.2-4.7 0-1.1-.6-2-1.8-2-1.4 0-2.5 1.5-2.5 3.4 0 1.3.4 2.1.4 2.1l-1.6 6.7c-.5 2-.1 4.4-.1 4.6"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M14.2 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H8.1V13h2.7v8"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ColumnHeading({ children }: { children: string }) {
   return (
     <h2 className="text-[10px] font-medium uppercase tracking-[0.22em] text-on-surface-variant/80">
@@ -46,14 +84,14 @@ export function Footer() {
   return (
     <footer className="mt-auto w-full border-t border-surface-container-high bg-surface text-on-surface">
       <div className="container-editorial">
-        <div className="flex flex-col gap-10 border-b border-surface-container-high py-16 md:flex-row md:items-end md:justify-between md:py-20">
+        <div className="flex flex-col items-center gap-8 border-b border-surface-container-high py-12 text-center sm:py-14 md:flex-row md:items-end md:justify-between md:py-20 md:text-left">
           <div className="max-w-[36rem]">
             <p className="eyebrow">Concierge</p>
             <h2 className="mt-6 text-balance font-display text-[clamp(2rem,3.6vw,2.9rem)] font-normal leading-[1.08] tracking-[-0.02em] text-primary">
               Extraordinary celebrations,{" "}
               <em className="italic text-secondary">quietly arranged.</em>
             </h2>
-            <p className="mt-6 max-w-md text-[13px] leading-relaxed text-on-surface-variant">
+            <p className="mx-auto mt-6 max-w-md text-[13px] leading-relaxed text-on-surface-variant md:mx-0">
               {BRAND.tagline}
             </p>
           </div>
@@ -74,11 +112,11 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-14 md:grid-cols-4 md:gap-x-14 md:py-16">
+        <div className="grid grid-cols-1 gap-y-10 py-12 text-center sm:grid-cols-2 sm:gap-x-8 sm:text-left md:grid-cols-4 md:gap-x-14 md:py-16">
           {columns.map((column) => (
             <div key={column.title}>
               <ColumnHeading>{column.title}</ColumnHeading>
-              <ul className="mt-6 space-y-3.5">
+              <ul className="mt-5 space-y-3.5">
                 {column.links.map((link) => (
                   <li key={link.label}>
                     <Link
@@ -93,9 +131,9 @@ export function Footer() {
             </div>
           ))}
 
-          <div>
+          <div className="sm:col-span-2 md:col-span-1">
             <ColumnHeading>Atelier</ColumnHeading>
-            <ul className="mt-6 space-y-3.5 text-[13px] leading-snug text-on-surface-variant">
+            <ul className="mt-5 space-y-3.5 text-[13px] leading-snug text-on-surface-variant">
               <li>
                 <a
                   href={`tel:${BRAND.phone.replace(/[^+\d]/g, "")}`}
@@ -112,19 +150,22 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="-mx-5 flex flex-col gap-6 border-t border-surface-container-high bg-surface px-5 py-6 text-[10px] uppercase tracking-[0.2em] text-on-secondary-fixed-variant md:-mx-12 md:flex-row md:items-center md:justify-between md:px-12">
-          <p>© {new Date().getFullYear()} · All rights reserved</p>
-
-          <nav aria-label="Social" className="flex items-center gap-7">
+        <div className="-mx-5 flex flex-col items-center gap-5 border-t border-surface-container-high bg-surface px-5 py-7 text-center text-[10px] uppercase tracking-[0.2em] text-on-surface-variant md:-mx-12 md:flex-row md:flex-wrap md:justify-between md:px-12 md:text-left">
+          <nav aria-label="Social" className="flex items-center justify-center gap-3">
             {socials.map((social) => (
               <a
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-quiet text-inherit transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                aria-label={social.label}
+                title={social.label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/45 text-on-surface-variant shadow-[0_8px_24px_-14px_rgba(27,28,26,0.55)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-white/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
               >
-                {social.label}
+                <span className="h-[18px] w-[18px]">
+                  <SocialIcon label={social.label} />
+                </span>
+                <span className="sr-only">{social.label}</span>
               </a>
             ))}
           </nav>
@@ -144,6 +185,10 @@ export function Footer() {
             </span>
             <span className="sr-only">(opens in a new tab)</span>
           </a>
+
+          <p className="border-t border-surface-container-high pt-5 text-[9px] md:w-full md:text-center">
+            © {new Date().getFullYear()} · All rights reserved
+          </p>
         </div>
       </div>
     </footer>
