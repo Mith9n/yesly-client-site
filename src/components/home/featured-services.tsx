@@ -8,8 +8,13 @@ import { ServiceCard } from "@/components/site/service-card";
 import { CardGridSkeleton } from "@/components/ui/skeletons";
 import { EmptyState } from "@/components/ui/empty-state";
 
+interface ServicesResponse {
+  total: number;
+}
+
 export function FeaturedServices() {
   const [services, setServices] = useState<Service[]>([]);
+  const [showcaseCount, setShowcaseCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -18,11 +23,13 @@ export function FeaturedServices() {
     let cancelled = false;
     void (async () => {
       try {
-        const data = await api<{ services: Service[] }>("/api/services/featured", {
-          auth: false,
-        });
+        const [featuredData, servicesData] = await Promise.all([
+          api<{ services: Service[] }>("/api/services/featured", { auth: false }),
+          api<ServicesResponse>("/api/services?limit=1", { auth: false }),
+        ]);
         if (cancelled) return;
-        setServices(data.services);
+        setServices(featuredData.services);
+        setShowcaseCount(servicesData.total);
         setError(null);
       } catch (err) {
         if (!cancelled) setError(errorMessage(err));
@@ -55,9 +62,11 @@ export function FeaturedServices() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <span className="label-editorial text-[9px] text-outline">
-              {services.length} showcases
-            </span>
+            {showcaseCount !== null && (
+              <span className="label-editorial text-[9px] text-outline">
+                {showcaseCount} showcases
+              </span>
+            )}
             <Link
               href="/services"
               className="inline-flex items-center gap-1.5 rounded-full border border-surface-container-high px-4 py-2 text-[11px] font-medium uppercase tracking-[0.12em] text-on-surface transition-all duration-300 hover:border-primary hover:bg-primary hover:text-on-primary"
