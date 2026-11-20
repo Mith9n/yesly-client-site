@@ -38,19 +38,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // late are discarded instead of overwriting a fresher role/logout.
   const requestRef = useRef(0);
 
-  const resolve = useCallback(async (force = false) => {
+  const resolve = useCallback(async (
+    force = false,
+    betterAuthUser?: Record<string, unknown>,
+  ) => {
     const requestId = ++requestRef.current;
+    const fallbackUser = betterAuthUser
+      ? ({
+          id: String(betterAuthUser.id ?? ""),
+          name: String(betterAuthUser.name ?? ""),
+          email: String(betterAuthUser.email ?? ""),
+          image: (betterAuthUser.image as string | null | undefined) ?? null,
+          role:
+            betterAuthUser.role === "vendor" || betterAuthUser.role === "admin"
+              ? betterAuthUser.role
+              : "customer",
+          isBlocked: betterAuthUser.isBlocked === true,
+          businessName:
+            (betterAuthUser.businessName as string | null | undefined) ?? null,
+          subscriptionPlan:
+            betterAuthUser.subscriptionPlan === "premium" ? "premium" : "free",
+          subscriptionExpiresAt:
+            (betterAuthUser.subscriptionExpiresAt as string | null | undefined) ??
+            null,
+          createdAt:
+            (betterAuthUser.createdAt as string | undefined) ?? undefined,
+        } satisfies User)
+      : null;
     try {
       const apiSession = await getApiSession(force);
       if (requestId !== requestRef.current) return;
-      setUser((apiSession?.user as User) ?? null);
+      const apiUser = apiSession?.user as User | null | undefined;
+      setUser(apiUser ?? fallbackUser);
       setBlockedMessage(null);
     } catch (error) {
       if (requestId !== requestRef.current) return;
       if (error instanceof ApiError && error.status === 403) {
         setBlockedMessage(error.message);
+        setUser(null);
+      } else {
+        setUser(fallbackUser);
       }
-      setUser(null);
     } finally {
       if (requestId === requestRef.current) setLoading(false);
     }
@@ -75,7 +103,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
       setLoading(true);
-      await resolve(true);
+      await resolve(
+        true,
+        session?.user as unknown as Record<string, unknown> | undefined,
+      );
     })();
 
     return () => {
@@ -85,8 +116,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refresh = useCallback(async () => {
     await refetch();
-    await resolve(true);
-  }, [refetch, resolve]);
+    await resolve(
+      true,
+      session?.user as unknown as Record<string, unknown> | undefined,
+    );
+  }, [refetch, resolve, session?.user]);
 
   const logout = useCallback(async () => {
     requestRef.current += 1;
