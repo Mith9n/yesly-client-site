@@ -150,8 +150,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="-mx-5 flex flex-col items-center gap-5 border-t border-surface-container-high bg-surface px-5 py-7 text-center text-[10px] uppercase tracking-[0.2em] text-on-surface-variant md:-mx-12 md:flex-row md:flex-wrap md:justify-between md:px-12 md:text-left">
-          <nav aria-label="Social" className="flex items-center justify-center gap-3">
+        <div className="-mx-5 grid grid-cols-2 items-center justify-items-center gap-5 border-t border-surface-container-high bg-surface px-5 py-7 text-center text-[10px] uppercase tracking-[0.2em] text-on-surface-variant sm:grid-cols-3 sm:-mx-12 sm:px-12 sm:text-left md:-mx-12 md:px-12">
+          <nav aria-label="Social" className="flex items-center justify-center gap-2 justify-self-start sm:gap-3">
             {socials.map((social) => (
               <a
                 key={social.label}
@@ -160,7 +160,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label={social.label}
                 title={social.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant/50 bg-surface-container-high/35 text-on-surface-variant shadow-[0_6px_18px_-12px_rgba(27,28,26,0.4)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-surface-container-high/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant/50 bg-surface-container-high/35 text-on-surface-variant shadow-[0_6px_18px_-12px_rgba(27,28,26,0.4)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-surface-container-high/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60 sm:h-10 sm:w-10"
               >
                 <span className="h-[18px] w-[18px]">
                   <SocialIcon label={social.label} />
@@ -170,11 +170,15 @@ export function Footer() {
             ))}
           </nav>
 
+          <p className="order-3 col-span-2 border-t border-surface-container-high pt-5 text-[9px] sm:order-2 sm:col-span-1 sm:justify-self-center sm:border-0 sm:pt-0 sm:text-center">
+            © {new Date().getFullYear()} · All rights reserved
+          </p>
+
           <a
             href={BRAND.developer.portfolioUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+            className="order-2 group inline-flex items-center gap-1.5 justify-self-end transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60 sm:order-3 sm:justify-self-end"
           >
             Site by{" "}
             <span className="font-medium text-secondary transition-colors duration-300 group-hover:text-primary">
@@ -185,10 +189,6 @@ export function Footer() {
             </span>
             <span className="sr-only">(opens in a new tab)</span>
           </a>
-
-          <p className="border-t border-surface-container-high pt-5 text-[9px] md:w-full md:text-center">
-            © {new Date().getFullYear()} · All rights reserved
-          </p>
         </div>
       </div>
     </footer>
