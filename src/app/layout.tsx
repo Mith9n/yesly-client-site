@@ -12,6 +12,27 @@ export const metadata: Metadata = {
   },
   description:
     "Discover and book the world's finest wedding ateliers, venues, florists and artisans with Yesly.",
+  applicationName: "Yesly",
+  keywords: [
+    "wedding marketplace",
+    "wedding vendors",
+    "wedding planning",
+    "bridal services",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Yesly",
+    title: "Yesly — Wedding Planning Platform",
+    description:
+      "Discover and book trusted wedding ateliers, venues, florists and artisans.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yesly — Wedding Planning Platform",
+    description:
+      "Discover and book trusted wedding ateliers, venues, florists and artisans.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
