@@ -10,6 +10,10 @@ const db = client.db(
 
 const appUrl = process.env.BETTER_AUTH_URL || "http://localhost:3000";
 
+export async function ensureAuthDbConnected() {
+  await client.connect();
+}
+
 async function findUserById(userId: unknown) {
   if (!userId) return null;
   const collection = db.collection("user");

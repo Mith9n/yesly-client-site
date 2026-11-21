@@ -1,4 +1,14 @@
-import { auth } from "@/lib/auth";
+import { auth, ensureAuthDbConnected } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
-export const { POST, GET } = toNextJsHandler(auth);
+const handler = toNextJsHandler(auth);
+
+export async function GET(request: Request) {
+  await ensureAuthDbConnected();
+  return handler.GET(request);
+}
+
+export async function POST(request: Request) {
+  await ensureAuthDbConnected();
+  return handler.POST(request);
+}
