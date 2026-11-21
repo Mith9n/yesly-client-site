@@ -77,8 +77,7 @@ export async function getApiSession(
   inflight = (async () => {
     const guard = createGuard(signal, timeoutMs);
     try {
-      const response = await fetch(`${API_URL}/api/auth/session`, {
-        credentials: "include",
+      const response = await fetch("/api/platform-session", {
         cache: "no-store",
         headers: { Accept: "application/json" },
         signal: guard.signal,

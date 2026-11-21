@@ -138,6 +138,8 @@ Add the deployed URL here after deployment, for example:
 
 - Set `NEXT_PUBLIC_API_URL` to the deployed API URL and `BETTER_AUTH_URL` /
   `NEXT_PUBLIC_APP_URL` to the deployed site URL.
+- Keep the client and API session exchange in place: the client proxies the
+  Better Auth cookie to the API because the deployed apps use separate origins.
 - Configure the API `CLIENT_URL` with the deployed client origin (CORS + credentials).
 - Add the Stripe webhook endpoint (`/api/payments/webhook`) and secret on the API host.
 - Verify sessions persist across reloads and dashboards remain role protected.

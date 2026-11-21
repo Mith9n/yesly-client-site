@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [isPending, sessionUserId, resolve]);
+  }, [isPending, sessionUserId, session?.user, resolve]);
 
   const refresh = useCallback(async () => {
     await refetch();
