@@ -148,6 +148,26 @@ export const auth = betterAuth({
           };
         },
       },
+      update: {
+        before: async (user) => {
+          // Better Auth's /update-user route accepts every field declared with
+          // `input: true`, so without this guard a signed-in user could POST
+          // {"role":"admin"} and promote themselves. Role and subscription
+          // state are platform-owned and must never be edited from the client.
+          const protectedFields = [
+            "role",
+            "isBlocked",
+            "subscriptionPlan",
+            "subscriptionExpiresAt",
+          ];
+          if (protectedFields.some((field) => field in user)) {
+            throw new APIError("FORBIDDEN", {
+              message:
+                "Role and subscription fields can only be changed by the platform.",
+            });
+          }
+        },
+      },
     },
     session: {
       create: {
