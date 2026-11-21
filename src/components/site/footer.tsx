@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BRAND } from "@/lib/constants";
 
 const columns = [
@@ -33,6 +34,9 @@ const socials = [
   { label: "Pinterest", href: BRAND.social.pinterest },
   { label: "Facebook", href: BRAND.social.facebook },
 ];
+
+const phoneHref = `tel:${BRAND.phone.replace(/[^+\d]/g, "")}`;
+const mailHref = `mailto:${BRAND.email}`;
 
 function SocialIcon({ label }: { label: string }) {
   if (label === "Instagram") {
@@ -74,98 +78,196 @@ function SocialIcon({ label }: { label: string }) {
 
 function ColumnHeading({ children }: { children: string }) {
   return (
-    <h2 className="text-[10px] font-medium uppercase tracking-[0.22em] text-on-surface-variant/80">
+    <h2 className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-on-surface">
+      <span aria-hidden className="h-px w-4 bg-secondary/70" />
       {children}
     </h2>
   );
 }
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="mt-auto w-full border-t border-surface-container-high bg-surface text-on-surface">
+    <footer className="mt-auto w-full bg-surface text-on-surface">
+      <div
+        aria-hidden
+        className="h-px w-full bg-gradient-to-r from-transparent via-secondary/45 to-transparent"
+      />
+
       <div className="container-editorial">
-        <div className="flex flex-col items-center gap-8 border-b border-surface-container-high py-12 text-center sm:py-14 md:flex-row md:items-end md:justify-between md:py-20 md:text-left">
-          <div className="max-w-[36rem]">
-            <p className="eyebrow">Concierge</p>
-            <h2 className="mt-6 text-balance font-display text-[clamp(2rem,3.6vw,2.9rem)] font-normal leading-[1.08] tracking-[-0.02em] text-primary">
-              Extraordinary celebrations,{" "}
-              <em className="italic text-secondary">quietly arranged.</em>
-            </h2>
-            <p className="mx-auto mt-6 max-w-md text-[13px] leading-relaxed text-on-surface-variant md:mx-0">
-              {BRAND.tagline}
+        {/* Concierge invitation */}
+        <div className="relative overflow-hidden border-b border-surface-container-high py-14 md:py-20">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-secondary-fixed/20 blur-3xl"
+          />
+
+          <div className="relative grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+            <div className="lg:col-span-7">
+              <p className="eyebrow">The Yesly Concierge</p>
+              <h2 className="mt-6 max-w-[18ch] text-balance font-display text-[clamp(2rem,3.8vw,3rem)] font-normal leading-[1.06] tracking-[-0.02em] text-primary">
+                Extraordinary celebrations,{" "}
+                <em className="italic text-secondary">quietly arranged.</em>
+              </h2>
+              <p className="mt-6 max-w-lg text-[13px] leading-relaxed text-on-surface-variant">
+                {BRAND.tagline}
+              </p>
+            </div>
+
+            <div className="lg:col-span-5">
+              <div className="relative overflow-hidden border border-surface-container-high bg-surface-container-low/70 p-6 sm:p-7">
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/50 to-transparent"
+                />
+
+                <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-on-surface-variant/75">
+                  Private consultation
+                </p>
+
+                <a
+                  href={mailHref}
+                  className="group mt-3 flex items-baseline gap-2 font-display text-[clamp(1.15rem,1.8vw,1.45rem)] leading-tight text-primary"
+                >
+                  <span className="link-quiet">{BRAND.email}</span>
+                  <span
+                    aria-hidden
+                    className="material-symbols-outlined text-[16px] text-secondary transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  >
+                    north_east
+                  </span>
+                </a>
+
+                <dl className="mt-6 space-y-4 border-t border-surface-container-high pt-5">
+                  <div>
+                    <dt className="text-[9px] uppercase tracking-[0.2em] text-on-surface-variant/70">
+                      Telephone
+                    </dt>
+                    <dd className="mt-1">
+                      <a
+                        href={phoneHref}
+                        className="link-quiet text-[13px] text-on-surface"
+                      >
+                        {BRAND.phone}
+                      </a>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[9px] uppercase tracking-[0.2em] text-on-surface-variant/70">
+                      Atelier
+                    </dt>
+                    <dd className="mt-1 text-[13px] leading-relaxed text-on-surface-variant">
+                      {BRAND.address}
+                    </dd>
+                  </div>
+                </dl>
+
+                <a
+                  href={`${mailHref}?subject=Consultation%20request`}
+                  className="group mt-6 flex w-full items-center justify-between gap-3 border-t border-surface-container-high pt-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                >
+                  Request a consultation
+                  <span
+                    aria-hidden
+                    className="material-symbols-outlined text-[16px] transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    arrow_forward
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Brand + directory */}
+        <div className="grid gap-12 py-14 md:py-16 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <Link href="/" aria-label="Yesly home" className="inline-block">
+              <Image
+                src="/images/yesly-footer-logo.png"
+                alt="Yesly"
+                width={288}
+                height={55}
+                sizes="(min-width: 768px) 148px, 132px"
+                className="h-auto w-[132px] md:w-[148px]"
+              />
+            </Link>
+
+            <p className="mt-6 max-w-[16rem] font-display text-[1.05rem] italic leading-relaxed text-on-surface-variant">
+              Celebrations, considered.
+            </p>
+
+            <p className="mt-6 text-[10px] uppercase tracking-[0.18em] text-on-surface-variant/70">
+              San Francisco · Worldwide
             </p>
           </div>
 
-          <a
-            href={`mailto:${BRAND.email}`}
-            className="group inline-flex w-fit items-center gap-3 text-[11px] font-medium uppercase tracking-[0.18em] text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-8 md:grid-cols-4 lg:col-span-8"
           >
-            <span className="border-b border-outline-variant pb-1.5 transition-colors duration-300 group-hover:border-secondary">
-              Speak with the concierge
-            </span>
-            <span
-              aria-hidden
-              className="material-symbols-outlined text-[17px] text-secondary transition-transform duration-300 group-hover:translate-x-0.5"
-            >
-              arrow_outward
-            </span>
-          </a>
-        </div>
+            {columns.map((column) => (
+              <div key={column.title}>
+                <ColumnHeading>{column.title}</ColumnHeading>
+                <ul className="mt-5 space-y-3.5">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="link-quiet text-[13px] leading-snug text-on-surface-variant transition-colors hover:text-primary"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
-        <div className="grid grid-cols-2 gap-x-5 gap-y-10 py-12 text-left sm:gap-x-8 md:grid-cols-4 md:gap-x-14 md:py-16">
-          {columns.map((column) => (
-            <div key={column.title}>
-              <ColumnHeading>{column.title}</ColumnHeading>
-              <ul className="mt-5 space-y-3.5">
-                {column.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="link-quiet text-[13px] leading-snug text-on-surface-variant hover:text-on-surface"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+            <div>
+              <ColumnHeading>Atelier</ColumnHeading>
+              <ul className="mt-5 space-y-3.5 text-[13px] leading-snug text-on-surface-variant">
+                <li>
+                  <a
+                    href={phoneHref}
+                    className="link-quiet transition-colors hover:text-primary"
+                  >
+                    {BRAND.phone}
+                  </a>
+                </li>
+                <li className="max-w-[15rem]">{BRAND.address}</li>
+                <li className="pt-1 text-[10px] uppercase tracking-[0.16em] text-on-surface-variant/70">
+                  By appointment · Worldwide
+                </li>
               </ul>
             </div>
-          ))}
-
-          <div>
-            <ColumnHeading>Atelier</ColumnHeading>
-            <ul className="mt-5 space-y-3.5 text-[13px] leading-snug text-on-surface-variant">
-              <li>
-                <a
-                  href={`tel:${BRAND.phone.replace(/[^+\d]/g, "")}`}
-                  className="link-quiet text-on-surface-variant hover:text-on-surface"
-                >
-                  {BRAND.phone}
-                </a>
-              </li>
-              <li>{BRAND.address}</li>
-              <li className="pt-1 text-[11px] uppercase tracking-[0.18em] text-on-surface-variant/80">
-                By appointment · Worldwide
-              </li>
-            </ul>
-          </div>
+          </nav>
         </div>
 
-        <div className="-mx-5 flex flex-col items-center gap-5 border-t border-surface-container-high bg-surface px-5 py-7 text-center text-[10px] uppercase tracking-[0.2em] text-on-surface-variant md:-mx-12 md:flex-row md:flex-wrap md:justify-between md:px-12 md:text-left">
-          <nav aria-label="Social" className="flex items-center justify-center gap-3">
+        {/* Colophon */}
+        <div className="flex flex-col items-center gap-6 border-t border-surface-container-high py-7 text-[10px] uppercase tracking-[0.16em] text-on-surface-variant md:flex-row md:justify-between md:gap-8">
+          <p className="order-2 text-center md:order-1 md:text-left">
+            © {year} Yesly. All rights reserved.
+          </p>
+
+          <nav
+            aria-label="Social"
+            className="order-1 flex items-center gap-2.5 md:order-2"
+          >
             {socials.map((social) => (
               <a
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={social.label}
+                aria-label={`${social.label} (opens in a new tab)`}
                 title={social.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant/50 bg-surface-container-high/35 text-on-surface-variant shadow-[0_6px_18px_-12px_rgba(27,28,26,0.4)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:bg-surface-container-high/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant/60 bg-surface-container-high/30 text-on-surface-variant transition-all duration-300 hover:-translate-y-0.5 hover:border-secondary/50 hover:bg-surface-container-high/70 hover:text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
               >
-                <span className="h-[18px] w-[18px]">
+                <span className="h-4 w-4">
                   <SocialIcon label={social.label} />
                 </span>
-                <span className="sr-only">{social.label}</span>
               </a>
             ))}
           </nav>
@@ -174,7 +276,7 @@ export function Footer() {
             href={BRAND.developer.portfolioUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+            className="group order-3 inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
           >
             Site by{" "}
             <span className="font-medium text-secondary transition-colors duration-300 group-hover:text-primary">
@@ -185,10 +287,6 @@ export function Footer() {
             </span>
             <span className="sr-only">(opens in a new tab)</span>
           </a>
-
-          <p className="border-t border-surface-container-high pt-5 text-[9px] md:w-full md:text-center">
-            © {new Date().getFullYear()} · All rights reserved
-          </p>
         </div>
       </div>
     </footer>
